@@ -1,0 +1,32 @@
+experiment:
+  name: "huggingface_example"
+  tracking_uri: "sqlite:///metadata/mlflow/mlruns.db"
+  artifact_location: "./metadata/mlflow/mlartifacts"
+
+# Set the registry server URI. This property is especially useful if you have a registry
+# server that’s different from the tracking server.
+model_registry:
+  # registry_uri: "sqlite:////tmp/registry.db"
+  # FIXME::REQUIRED: Specifies the name of the Registered Model to use when registering a trained
+  #                 model to the MLflow Model Registry.
+  model_name: "huggingface_model"
+
+# Override the default train / validation / test dataset split ratios
+SPLIT_RATIOS: [0.80, 0.10, 0.10]
+
+INGEST_CONFIG:
+  # For different options please read: https://github.com/mlflow/recipes-classification-template#ingest-step
+  using: huggingface
+  location: ["./data/input.txt"]
+  dataset_format: "text"
+
+INGEST_SCORING_CONFIG:
+  # For different options please read: https://github.com/mlflow/recipes-classification-template#batch-scoring
+  using: huggingface
+  location: ["./data/input.txt"]
+  dataset_format: "text"
+
+PREDICT_OUTPUT_CONFIG:
+  # For different options please read: https://github.com/mlflow/recipes-classification-template#predict-step
+  using: huggingface
+  location: "./data/predict.txt"
